@@ -4,16 +4,15 @@ pipeline {
     }
     stages {
         stage('Build') {
-            steps {
-                script {
-                    // Correct syntax: Pass the image name as a string.
-                    // The second optional argument is the build context directory.
-                    // If your Dockerfile is in the root, you can use '.'
-                    def myImage = docker.build('myapp:latest', '.')
-
-                    echo "Successfully built ${myImage.id}"
-                }
-            }
+    steps {
+        script {
+            // Correct syntax: The first argument is the image name and tag.
+            // The second argument is the build context ('.' for the current directory).
+            def myImage = docker.build('myapp:latest', '.')
+            
+            echo "Successfully built image: ${myImage.id}"
+        }
+    }
         }
     }
 }
