@@ -1,18 +1,23 @@
-pipeline {
-    agent {
-        label 'docker-slave'
+pipeline{
+    agent{
+        label "docker"
     }
-    stages {
+    stages{
         stage('Build') {
-    steps {
-        script {
-            // Correct syntax: The first argument is the image name and tag.
-            // The second argument is the build context ('.' for the current directory).
-            def myImage = docker.build('myapp:latest', '.')
-            
-            echo "Successfully built image: ${myImage.id}"
+            steps{
+                echo "*********build the src code *********"
+                sh "mvn clean package -DskipTests"
+            }
         }
-    }
+        stage('Test') {
+            steps{
+                echo "*********run the unit tests *********"
+                sh ''' mvn clean verify sonar:sonar \
+                         -Dsonar.projectKey=spring \
+                         -Dsonar.host.url=http://34.55.114.215:9000 \
+                         -Dsonar.login=sqp_85831cfcf94cbc6dcdb4e50d18f012b6ce4b8ce7 
+                '''
+            }
         }
     }
 }
