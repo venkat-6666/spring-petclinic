@@ -1,4 +1,4 @@
-@Library ("com.venkat.sharedlib") _
+@Library ("com.venkat.sharedlib") _ // import com.venkat.sharedlib.Utils
 pipeline {
     agent {
         label "sujith-label1"
@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('buliding'){
             steps{
-                maven()
+                mavenBuild()
             }
         }
       stage("Docker Build"){
         steps{
-            docker("my-java-app:latest")
+            dockerBuild("my-java-app:latest")
         }
       }
       stage("Docker Run"){
