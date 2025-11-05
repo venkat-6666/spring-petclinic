@@ -12,7 +12,7 @@ pipeline {
         }
       stage("Docker Build"){
         steps{
-            docker(my-java-app:latest)
+            docker("my-java-app:latest")
         }
       }
       stage("Docker Run"){
