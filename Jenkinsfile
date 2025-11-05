@@ -1,25 +1,24 @@
-pipeline{
-    agent any
-    tools {
-        maven 'maven'
-        jdk 'jdk'
+@Library ("com.venkat.sharedlib") _
+pipeline {
+    agent {
+        label "sujith-label1"
     }
-    stages{
-        stage('Build') {
+
+    stages {
+        stage('buliding'){
             steps{
-                echo "*********build the src code *********"
-                sh "mvn clean package -DskipTests"
+                maven()
             }
         }
-        stage('Test') {
-            steps{
-                echo "*********run the unit tests *********"
-                sh ''' mvn clean verify sonar:sonar \
-                         -Dsonar.projectKey=spring \
-                         -Dsonar.host.url=http://34.55.114.215:9000 \
-                         -Dsonar.login=sqp_85831cfcf94cbc6dcdb4e50d18f012b6ce4b8ce7 
-                '''
-            }
+      stage("Docker Build"){
+        steps{
+            docker(my-java-app:latest)
         }
+      }
+      stage("Docker Run"){
+        steps{
+            runContainer("my-java-app:latest",8989,8080)
+        }
+      }
     }
 }
