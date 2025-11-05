@@ -17,7 +17,7 @@ pipeline {
       }
       stage("Docker Run"){
         steps{
-            runContainer("my-java-app:latest",8989,8080)
+            runContainer("my-java-app:latest","myjava",8989,8080)
         }
       }
     }
