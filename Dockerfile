@@ -1,4 +1,4 @@
-FROM openjdk:21-slim
+FROM eclipse-temurin:21-jdk
 RUN apt update -y && apt install maven -y
 WORKDIR /app
 COPY . /app
